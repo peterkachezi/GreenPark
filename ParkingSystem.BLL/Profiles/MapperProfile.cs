@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ParkingSystem.DAL.Models;
 using ParkingSystem.DTO.CustomerModule;
+using ParkingSystem.DTO.ParkingSlotModule;
 
 namespace ParkingSystem.BLL.Profiles
 {
@@ -9,6 +10,8 @@ namespace ParkingSystem.BLL.Profiles
         public MapperProfile()
         {
             CreateMap<Customer, CustomerDTO>().ReverseMap();
+
+            CreateMap<ParkingSlot, ParkingSlotDTO>().ReverseMap();
 
 
         }

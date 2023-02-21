@@ -3,9 +3,10 @@ $(document).ready(function () {
 
 });
 
+
 function DeleteRecord(e) {
 
-
+    //$("#divLoader").show();
     var id = e;
 
     console.log(id);
@@ -34,7 +35,7 @@ function DeleteRecord(e) {
 
                 type: "GET",
 
-                url: "/Admin/Counties/Delete/" + id,
+                url: "/ParkingSlots/Delete/" + id,
 
                 success: function (response) {
 
@@ -93,23 +94,23 @@ $("#btnSubmit").click(function () {
         swal({
             position: 'top-end',
             type: "error",
-            title: "County name is a required field ",
+            title: "Please enter first name",
             showConfirmButton: true,
         });
 
         return false;
     }
 
-
-    $("#ModalCreateCounty").modal('hide');
+    $("#ModalCreateSlots").modal('hide');
 
     $("#divLoader").show();
 
-    var formData = new FormData($('#frmAddCounty').get(0));
+
+    var formData = new FormData($('#frmAddSlots').get(0));
 
     $.ajax({
         type: "POST",
-        url: "/Admin/Counties/Create", // NB: Use the correct action name
+        url: "/ParkingSlots/Create", // NB: Use the correct action name
         data: formData,
         dataType: 'json',
         contentType: false,
@@ -161,7 +162,7 @@ $("#btnUpdate").click(function () {
         swal({
             position: 'top-end',
             type: "error",
-            title: "County name is a required field",
+            title: "Please enter category name",
             showConfirmButton: true,
         });
 
@@ -170,16 +171,16 @@ $("#btnUpdate").click(function () {
 
 
 
-    $("#ModalUpdateCounty").modal('hide');
+    $("#ModalEditSlots").modal('hide');
 
     $("#divLoader").show();
 
 
-    var formData = new FormData($('#frmUpdateCounty').get(0));
+    var formData = new FormData($('#frmUpdateSlot').get(0));
 
     $.ajax({
         type: "POST",
-        url: "/Admin/Counties/Update", // NB: Use the correct action name
+        url: "/ParkingSlots/Update", // NB: Use the correct action name
         data: formData,
         dataType: 'json',
         contentType: false,
@@ -227,7 +228,7 @@ function GetRecord(e) {
 
     var id = e;
 
-    $.get("/Admin/Counties/GetById/?Id=" + id, function (data, status) {
+    $.get("/ParkingSlots/GetById/?Id=" + id, function (data, status) {
 
         console.log(data);
         if (data == null) {
@@ -235,23 +236,18 @@ function GetRecord(e) {
         } else {
 
             $("#txtId").val(data.data.id);
-
             $("#txtName1").val(data.data.name);
+          
 
-            $('#ModalUpdateCounty').modal({ backdrop: 'static', keyboard: false })
-            $("#ModalUpdateCounty").modal('show');
+            $('#ModalEditSlots').modal({ backdrop: 'static', keyboard: false })
+            $("#ModalEditSlots").modal('show');
         }
 
     });
 };
 
-function SubCountyDetails(e) {
 
-    var id = e;
 
-    window.location.href = "/Admin/Counties/Details/" + id;
-
-}
 
 //Allow users to enter numbers only
 $(".numericOnly").bind('keypress', function (e) {

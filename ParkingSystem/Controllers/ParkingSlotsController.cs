@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ParkingSystem.BLL.Repositories.CustomerModule;
+using ParkingSystem.BLL.Repositories.ParkingSlotModule;
 using ParkingSystem.DAL.Models;
 using ParkingSystem.DTO.CustomerModule;
 using ParkingSystem.DTO.ParkingSlotModule;
@@ -9,12 +10,12 @@ namespace ParkingSystem.Controllers
 {
 	public class ParkingSlotsController : Controller
 	{
-        private readonly ICustomerRepository customerRepository;
+        private readonly IParkingSlotRepository parkingSlotRepository;
 
         private readonly UserManager<AppUser> userManager;
-        public ParkingSlotsController(UserManager<AppUser> userManager, ICustomerRepository customerRepository)
+        public ParkingSlotsController(UserManager<AppUser> userManager, IParkingSlotRepository parkingSlotRepository)
         {
-            this.customerRepository = customerRepository;
+            this.parkingSlotRepository = parkingSlotRepository;
 
             this.userManager = userManager;
         }
@@ -22,7 +23,7 @@ namespace ParkingSystem.Controllers
         {
             try
             {
-                var customers = await customerRepository.GetAll();
+                var customers = await parkingSlotRepository.GetAll();
 
                 return View(customers);
             }
@@ -38,13 +39,13 @@ namespace ParkingSystem.Controllers
         {
             try
             {
-                parkingSlotDTO.LastName = parkingSlotDTO.FirstName.Substring(0, 1).ToUpper() + parkingSlotDTO.FirstName.Substring(1).ToLower().Trim();
+                parkingSlotDTO.Name = parkingSlotDTO.Name.Substring(0, 1).ToUpper() + parkingSlotDTO.Name.Substring(1).ToLower().Trim();
 
                 var user = await userManager.FindByEmailAsync(User.Identity.Name);
 
                 parkingSlotDTO.CreatedBy = user.Id;
 
-                var results = await customerRepository.Create(parkingSlotDTO);
+                var results = await parkingSlotRepository.Create(parkingSlotDTO);
 
                 if (results != null)
                 {
@@ -69,13 +70,11 @@ namespace ParkingSystem.Controllers
             {
                 var user = await userManager.FindByEmailAsync(User.Identity.Name);
 
-                parkingSlotDTO.FirstName = parkingSlotDTO.FirstName.Substring(0, 1).ToUpper() + parkingSlotDTO.FirstName.Substring(1).ToLower().Trim();
-
-                parkingSlotDTO.LastName = parkingSlotDTO.LastName.Substring(0, 1).ToUpper() + parkingSlotDTO.LastName.Substring(1).ToLower().Trim();
+                parkingSlotDTO.Name = parkingSlotDTO.Name.Substring(0, 1).ToUpper() + parkingSlotDTO.Name.Substring(1).ToLower().Trim();
 
                 parkingSlotDTO.UpdatedBy = user.Id;
 
-                var results = await customerRepository.Update(parkingSlotDTO);
+                var results = await parkingSlotRepository.Update(parkingSlotDTO);
 
                 if (results != null)
                 {
@@ -97,7 +96,7 @@ namespace ParkingSystem.Controllers
         {
             try
             {
-                var results = await customerRepository.Delete(Id);
+                var results = await parkingSlotRepository.Delete(Id);
 
                 if (results == true)
                 {
@@ -119,7 +118,7 @@ namespace ParkingSystem.Controllers
         {
             try
             {
-                var file = await customerRepository.GetById(Id);
+                var file = await parkingSlotRepository.GetById(Id);
 
                 if (file != null)
                 {

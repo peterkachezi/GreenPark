@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ParkingSystem.BLL.Profiles;
 using ParkingSystem.BLL.Repositories.CustomerModule;
+using ParkingSystem.BLL.Repositories.ParkingSlotModule;
 using ParkingSystem.DAL.DbContext;
 using ParkingSystem.DAL.Models;
 using ParkingSystem.Extensions;
@@ -26,6 +27,8 @@ builder.Services.AddTransient<IUserClaimsPrincipalFactory<AppUser>, ApplicationU
 builder.Services.AddTransient<IMailService, MailService>();
 
 builder.Services.AddTransient<ICustomerRepository, CustomerRepository>();
+
+builder.Services.AddTransient<IParkingSlotRepository, ParkingSlotRepository>();
 
 var app = builder.Build();
 
@@ -59,11 +62,11 @@ var scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
 
 using (var scope = scopeFactory.CreateScope())
 {
-    //var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-    //var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
 
-    //SeedUsers.Seed(userManager, roleManager);
+    SeedUsers.Seed(userManager, roleManager);
 }
 
 

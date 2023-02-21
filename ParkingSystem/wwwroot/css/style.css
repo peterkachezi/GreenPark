@@ -207,13 +207,7 @@ hr.new3 {
     border-color: #1c7430;
 }
 
-.disabled_user {
-    padding: 4px 8px;
-    height: 1.6rem;
-    color: #fff;
-    background-color: #ff5722;
-    border-color: #ff5722;
-}
+
 
 .center {
     margin: auto;
@@ -252,6 +246,18 @@ hr.new3 {
     color: white;
     text-align: center;
 }
+
+.disabled_user {
+    border-radius: 9px;
+    display: block;
+    margin-bottom: 0;
+    position: relative;
+    color: white;
+    text-align: center;
+    background-color: #ff5722;
+    border-color: #ff5722;
+}
+
 
 
 

@@ -9,5 +9,6 @@ namespace ParkingSystem.DAL.Models
         public DateTime CreateDate { get; set; }
         public string? UpdatedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
+        public byte Status { get; set; }
     }
 }
